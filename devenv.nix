@@ -6,6 +6,7 @@
     pkgs.git
     pkgs.jq
     pkgs.tree
+    pkgs.stdenv.cc.cc.lib
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     pkgs.libstdcxx5
   ];
