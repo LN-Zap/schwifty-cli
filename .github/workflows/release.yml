@@ -6,17 +6,25 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform == 'linux' && 'ubuntu-latest' || matrix.platform == 'windows' && 'ubuntu-latest' || matrix.platform == 'osx' && 'macos-latest' }}
     strategy:
       matrix:
-        platform: [linux, osx, windows]
+        platform: [linux, windows, osx]
+      fail-fast: false
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
     - name: Build binary
+      if: matrix.platform == 'linux' || matrix.platform == 'windows'
       run: docker run --rm -v "${PWD}:/src/" --env SPECFILE=./schwifty.spec batonogov/pyinstaller-${{ matrix.platform }}
+
+    - name: Build binary (macos)
+      uses: devcontainers/ci@v0.3
+      if: matrix.platform == 'osx'
+      with:
+        runCmd: devenv test
 
     - name: Test binary
       run: dist/schwifty "DE89370400440532013000"
