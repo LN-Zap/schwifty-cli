@@ -23,8 +23,8 @@
   '';
 
   # https://devenv.sh/scripts/
-  scripts.build.exec = "pyinstaller --clean schwifty.spec --noconfirm";
-  scripts.schwifty.exec = "$DEVENV_ROOT/dist/schwifty/schwifty $@";
+  scripts.build.exec = "pyinstaller --clean --noconfirm schwifty.spec";
+  scripts.schwifty.exec = "$DEVENV_ROOT/dist/schwifty $@";
   scripts.schwifty-src.exec = "$DEVENV_ROOT/.venv/bin/python $DEVENV_ROOT/schwifty-cli/__main__.py $@";
 
   # https://devenv.sh/languages/
