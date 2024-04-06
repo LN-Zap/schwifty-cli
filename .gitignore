@@ -1,0 +1,13 @@
+.vscode/
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# Direnv
+.direnv
+.envrc.local
+
+# build
+build/
+dist/
