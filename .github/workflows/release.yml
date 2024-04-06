@@ -16,16 +16,29 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Build binary
+    # Linux
+    - name: Build binary (linux/windows)
       if: matrix.platform == 'linux' || matrix.platform == 'windows'
       run: docker run --rm -v "${PWD}:/src/" --env SPECFILE=./schwifty.spec batonogov/pyinstaller-${{ matrix.platform }}
 
-    - name: Build binary (macos)
-      uses: devcontainers/ci@v0.3
+    # Macos
+    - uses: cachix/install-nix-action@v26
+      if: matrix.platform == 'osx'
+
+    - uses: cachix/cachix-action@v14
       if: matrix.platform == 'osx'
       with:
-        runCmd: devenv test
+        name: devenv
 
+    - name: Install devenv.sh
+      if: matrix.platform == 'osx'
+      run: nix profile install nixpkgs#devenv
+
+    - name: Build binary (macos)
+      if: matrix.platform == 'osx'
+      run: devenv test
+
+    # Finalize
     - name: Test binary
       run: dist/schwifty "DE89370400440532013000"
 
