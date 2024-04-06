@@ -1,0 +1,17 @@
+name: Build and test
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build devcontainer image
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: devenv test
