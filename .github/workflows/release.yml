@@ -7,18 +7,26 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux, osx]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
     - name: Build linux image
-      run: docker run --rm -v "${PWD}:/src/" --env SPECFILE=./schwifty.spec batonogov/pyinstaller-linux
+      run: docker run --rm -v "${PWD}:/src/" --env SPECFILE=./schwifty.spec batonogov/pyinstaller-${{ matrix.platform }}
 
     - name: Test linux image
       run: dist/schwifty "DE89370400440532013000"
 
+    - name: Compress binary
+      run: tar -czvf schwifty-${{ matrix.platform }}.tar.gz -C dist/ schwifty
+
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: dist/schwifty
+        asset_path: ./schwifty-${{ matrix.platform }}.tar.gz
+        asset_name: schwifty-${{ matrix.platform }}.tar.gz
+        asset_content_type: application/gzip
