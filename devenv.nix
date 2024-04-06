@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # https://devenv.sh/packages/
@@ -6,6 +6,8 @@
     pkgs.git
     pkgs.jq
     pkgs.tree
+  ] ++ lib.optionals pkgs.stdenv.isLinux [
+    pkgs.libstdcxx5
   ];
 
   enterTest = ''
