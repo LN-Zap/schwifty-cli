@@ -12,6 +12,11 @@
     build
     tree build -L 3
     tree dist -L 3
+
+    echo "testing source..."
+    schwifty-src "DE89370400440532013000" | jq '.'
+
+    echo "testing binary..."
     schwifty "DE89370400440532013000" | jq '.'
   '';
 
