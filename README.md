@@ -28,6 +28,14 @@ To build the Schwifty CLI (using PyInstaller), run the following command in the 
 build
 ```
 
+## Test
+
+To run the tests for the Schwifty CLI, use the following command in the terminal:
+
+```bash
+devenv test
+```
+
 ## Usage
 
 
