@@ -7,6 +7,11 @@
     pkgs.jq
   ];
 
+  enterTest = ''
+    build
+    schwifty "DE89370400440532013000" | jq '.'
+  '';
+
   # https://devenv.sh/scripts/
   scripts.build.exec = "pyinstaller --clean schwifty.spec --noconfirm";
   scripts.schwifty.exec = "$DEVENV_ROOT/dist/schwifty/schwifty $@";
