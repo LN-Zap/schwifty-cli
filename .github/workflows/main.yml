@@ -14,24 +14,30 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11.8'
+    # - name: Set up Python
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: '3.11.8'
 
-    - name: Install Nix
-      uses: cachix/install-nix-action@v26
+    # - name: Install Nix
+    #   uses: cachix/install-nix-action@v26
 
-    - name: Install Cachix
-      uses: cachix/cachix-action@v14
-      with:
-        name: devenv
+    # - name: Install Cachix
+    #   uses: cachix/cachix-action@v14
+    #   with:
+    #     name: devenv
 
-    - name: Install devenv.sh
-      run: nix profile install nixpkgs#devenv
+    # - name: Install devenv.sh
+    #   run: nix profile install nixpkgs#devenv
 
-    - name: Build the devenv shell and run any pre-commit hooks
-      run: devenv test
+    # - name: Build the devenv shell and run any pre-commit hooks
+    #   run: devenv test
+
+    - name: Build linux image
+      run: docker run --rm -v "${PWD}:/src/" --env SPECFILE=./schwifty.spec batonogov/pyinstaller-linux
+
+    - name: Test linux image
+      run: dist/schwifty "DE89370400440532013000"
 
     # - name: Build devcontainer image
     #   uses: devcontainers/ci@v0.3
