@@ -5,10 +5,13 @@
   packages = [
     pkgs.git
     pkgs.jq
+    pkgs.tree
   ];
 
   enterTest = ''
     build
+    tree build -L 3
+    tree dist -L 3
     schwifty "DE89370400440532013000" | jq '.'
   '';
 
