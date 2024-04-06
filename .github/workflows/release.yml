@@ -9,16 +9,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux, osx]
+        platform: [linux, osx, windows]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Build linux image
+    - name: Build binary
       run: docker run --rm -v "${PWD}:/src/" --env SPECFILE=./schwifty.spec batonogov/pyinstaller-${{ matrix.platform }}
 
-    - name: Test linux image
+    - name: Test binary
       run: dist/schwifty "DE89370400440532013000"
 
     - name: Compress binary
