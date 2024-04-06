@@ -13,7 +13,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Build devcontainer image
-      uses: devcontainers/ci@v0.3
+    - name: Install Nix
+      uses: cachix/install-nix-action@v26
+
+    - name: Install Cachix
+      uses: cachix/cachix-action@v14
       with:
-        runCmd: devenv test
+        name: devenv
+
+    - name: Build devcontainer image
+      run: devenv shell && devenv test
+
+    # - name: Build devcontainer image
+    #   uses: devcontainers/ci@v0.3
+    #   with:
+    #     runCmd: devenv test
