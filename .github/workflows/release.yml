@@ -6,44 +6,47 @@ on:
 
 jobs:
   release:
-    runs-on: ${{ matrix.platform == 'linux' && 'ubuntu-latest' || matrix.platform == 'windows' && 'ubuntu-latest' || matrix.platform == 'osx' && 'macos-latest' }}
+    runs-on: ${{ matrix.platform == 'linux' && 'ubuntu-latest' || matrix.platform == 'windows' && 'ubuntu-latest' || matrix.platform == 'macos' && 'macos-latest' }}
     strategy:
       matrix:
-        platform: [linux, windows, osx]
+        platform: [linux, windows, macos]
       fail-fast: false
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Linux
+
+    # Linux (for linux and windows we can use the default make commands to build the binary)
     - name: Build binary (linux/windows)
       if: matrix.platform == 'linux' || matrix.platform == 'windows'
-      run: docker run --rm -v "${PWD}:/src/" --env SPECFILE=./schwifty.spec batonogov/pyinstaller-${{ matrix.platform }}
+      run: make dist-${{ matrix.platform }}
 
-    # Macos
+
+    # Macos (for macos we need to use cachix to install nix and devenv and then use devenv to build the binary)
     - uses: cachix/install-nix-action@v26
-      if: matrix.platform == 'osx'
+      if: matrix.platform == 'macos'
 
     - uses: cachix/cachix-action@v14
-      if: matrix.platform == 'osx'
+      if: matrix.platform == 'macos'
       with:
         name: devenv
 
     - name: Install devenv.sh
-      if: matrix.platform == 'osx'
+      if: matrix.platform == 'macos'
       run: nix profile install nixpkgs#devenv
 
     - name: Build binary (macos)
-      if: matrix.platform == 'osx'
-      run: devenv test
+      if: matrix.platform == 'macos'
+      run: devenv shell make dist-macos
+
 
     # Finalize
     - name: Test binary
-      run: dist/schwifty "DE89370400440532013000"
+      run: dist/${{ matrix.platform }}/schwifty "DE89370400440532013000"
 
     - name: Compress binary
-      run: tar -czvf schwifty-${{ matrix.platform }}.tar.gz -C dist/ schwifty
+      run: tar -czvf schwifty-${{ matrix.platform }}.tar.gz -C dist/${{ matrix.platform }}/ schwifty
 
     - uses: shogo82148/actions-upload-release-asset@v1
       with:
