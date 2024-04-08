@@ -11,21 +11,14 @@ git clone https://github.com/LN-Zap/schwifty-cli.git
 cd schwifty-cli
 ```
 
-If you have [`devenv`](https://devenv.sh/) and [`direnv`](https://direnv.net/) setup, the Schwifty development environment should activate automatically on entering the project directory. If not, install those dependencies.
-
-## Development
-
-To run the Schwifty CLI in development mode (direct from the source code in the `schwifty-cli` directory), use the following command in the terminal:
-```bash
-schwifty-src [IBAN]
-```
+If you have [`devenv`](https://devenv.sh/) and [`direnv`](https://direnv.net/) setup, the Schwifty development environment should activate automatically on entering the project directory. If not, install those dependencies. Alternativly, install the Python and Poetry project dependencies.
 
 ## Build
 
 To build the Schwifty CLI (using PyInstaller), run the following command in the terminal:
 
-```
-build
+```bash
+make build
 ```
 
 ## Test
@@ -33,11 +26,15 @@ build
 To run the tests for the Schwifty CLI, use the following command in the terminal:
 
 ```bash
-devenv test
+make test
 ```
 
 ## Usage
 
+To run the Schwifty CLI direct from the source code, run the following command in the terminal:
+```bash
+schwifty-src [IBAN]
+```
 
 To use the Schwifty CLI, run the following command in the terminal:
 

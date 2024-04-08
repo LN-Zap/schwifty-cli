@@ -12,19 +12,11 @@
   ];
 
   enterTest = ''
-    build
-    tree build -L 3
-    tree dist -L 3
-
-    echo "testing source..."
-    schwifty-src "DE89370400440532013000" | jq '.'
-
-    # echo "testing binary..."
-    # schwifty "DE89370400440532013000" | jq '.'
+    make build
+    make test
   '';
 
   # https://devenv.sh/scripts/
-  scripts.build.exec = "pyinstaller --clean --noconfirm schwifty.spec";
   scripts.schwifty.exec = "$DEVENV_ROOT/dist/schwifty $@";
   scripts.schwifty-src.exec = "$DEVENV_ROOT/.venv/bin/python $DEVENV_ROOT/schwifty-cli/__main__.py $@";
 
