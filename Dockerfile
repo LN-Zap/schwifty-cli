@@ -1,15 +1,16 @@
 FROM debian:bookworm-slim
 
+# Create a group and user
+RUN groupadd -r appgroup && useradd -r -g appgroup appuser
+
 WORKDIR /app
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl tar && \
-    rm -rf /var/lib/apt/lists/*
+# Change the ownership of the /app directory to the appuser
+RUN chown -R appuser:appgroup /app
 
-# COPY ./schwifty-linux.tar.gz .
+# Switch to the appuser
+USER appuser
 
-# RUN tar -xzf schwifty-linux.tar.gz && rm schwifty-linux.tar.gz
-
-COPY ./dist/schwifty .
+COPY ./dist/linux/schwifty .
 
 ENTRYPOINT ["./schwifty"]
