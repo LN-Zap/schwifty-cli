@@ -23,7 +23,6 @@
   # https://devenv.sh/languages/
   languages.python.enable = true;
   languages.python.venv.enable = true;
-  languages.python.poetry.enable = true;
 
   # https://devenv.sh/integrations/codespaces-devcontainer/
   devcontainer.enable = true;

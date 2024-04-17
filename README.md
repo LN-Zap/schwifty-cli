@@ -11,7 +11,7 @@ git clone https://github.com/LN-Zap/schwifty-cli.git
 cd schwifty-cli
 ```
 
-If you have [`devenv`](https://devenv.sh/) and [`direnv`](https://direnv.net/) setup, the Schwifty development environment should activate automatically on entering the project directory. If not, install those dependencies. Alternativly, install the Python and Poetry project dependencies.
+If you have [`devenv`](https://devenv.sh/) and [`direnv`](https://direnv.net/) setup, the Schwifty development environment should activate automatically on entering the project directory. If not, install those dependencies. Alternativly, install the Python project dependencies.
 
 ## Build
 
