@@ -1,2 +1,2 @@
-schwifty @ git+https://github.com/LN-Zap/schwifty@main
+schwifty @ git+https://github.com/LN-Zap/schwifty@8c88b005adb2c4ff799cbd3ceb3386e7d655ded9
 pyinstaller==6.5.0
