@@ -1,6 +1,7 @@
 .PHONY: build test test-binary dist-linux dist-macos dist-windows
 
 build:
+	pip install -r requirements.txt
 	pyinstaller --clean --noconfirm schwifty.spec
 
 test:
