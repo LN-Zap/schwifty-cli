@@ -21,8 +21,11 @@
   scripts.schwifty-src.exec = "$DEVENV_ROOT/.venv/bin/python $DEVENV_ROOT/schwifty-cli/__main__.py $@";
 
   # https://devenv.sh/languages/
-  languages.python.enable = true;
-  languages.python.venv.enable = true;
+  languages.python = {
+    enable = true;
+    venv.enable = true;
+    venv.requirements = ./requirements.txt;
+  };
 
   # https://devenv.sh/integrations/codespaces-devcontainer/
   devcontainer.enable = true;
